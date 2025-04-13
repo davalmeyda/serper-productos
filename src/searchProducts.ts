@@ -9,7 +9,7 @@ const API_KEY = process.env.SERPER_API_KEY;
 const DEFAULT_GL = process.env.SERPER_GL || 'pe';
 const DEFAULT_HL = process.env.SERPER_HL || 'es-419';
 const DEFAULT_TBS = process.env.SERPER_TBS;
-const DEFAULT_NUM = process.env.SERPER_NUM ? parseInt(process.env.SERPER_NUM) : undefined;
+const DEFAULT_NUM = process.env.SERPER_NUM ? parseInt(process.env.SERPER_NUM.toString()) : undefined;
 
 // Verificar que la API key esté definida
 if (!API_KEY) {
