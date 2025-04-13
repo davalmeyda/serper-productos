@@ -60,7 +60,7 @@ Para usar este paquete como un servidor MCP independiente, puedes configurarlo e
         "SERPER_GL": "pe",
         "SERPER_HL": "es-419",
         "SERPER_TBS": "qdr:m",
-        "SERPER_NUM": 10
+        "SERPER_NUM": "10"
       }
     }
   }

@@ -8,7 +8,7 @@ import { searchProducts } from "./searchProducts.js";
 // Create an MCP server
 const server = new McpServer({
   name: "Serper Productos",
-  version: "1.0.2",
+  version: "1.0.5",
 });
 
 // Add search tool
