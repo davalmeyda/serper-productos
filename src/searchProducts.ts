@@ -25,6 +25,12 @@ interface SearchOptions {
   num?: number;   // Número de resultados (máximo 100)
 }
 
+  /**
+   * Busca productos en internet utilizando la API de Google Serper.
+   * @param query Término de búsqueda para encontrar productos.
+   * @param options Opciones para la búsqueda (gl, hl, tbs, num).
+   * @returns Una cadena con los productos encontrados, formateados como texto.
+   */
 export const searchProducts = async (query: string, options?: SearchOptions): Promise<string> => {
   try {
     // Construir el cuerpo de la petición con parámetros obligatorios
