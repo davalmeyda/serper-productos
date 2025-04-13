@@ -1,6 +1,6 @@
 {
   "name": "serper-productos",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MCP server para búsqueda de productos usando la API de Google Serper",
   "license": "MIT",
   "author": "David Almeyda <davalmeyda@gmail.com>",

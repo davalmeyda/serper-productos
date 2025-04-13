@@ -9,7 +9,8 @@ const API_KEY = process.env.SERPER_API_KEY;
 const DEFAULT_GL = process.env.SERPER_GL || 'pe';
 const DEFAULT_HL = process.env.SERPER_HL || 'es-419';
 const DEFAULT_TBS = process.env.SERPER_TBS;
-const DEFAULT_NUM = process.env.SERPER_NUM ? parseInt(process.env.SERPER_NUM.toString()) : undefined;
+// Simplificación del manejo de SERPER_NUM
+const DEFAULT_NUM = process.env.SERPER_NUM ? Number(process.env.SERPER_NUM) : 10; // Valor por defecto: 10 resultados
 
 // Verificar que la API key esté definida
 if (!API_KEY) {
@@ -46,10 +47,8 @@ export const searchProducts = async (query: string, options?: SearchOptions): Pr
       requestBody.tbs = tbs;
     }
     
-    const num = options?.num !== undefined ? options.num : DEFAULT_NUM;
-    if (num !== undefined) {
-      requestBody.num = num;
-    }
+    // Simplificación del manejo del número de resultados
+    requestBody.num = options?.num || DEFAULT_NUM; // Usar el valor de options o el valor por defecto
     
     const response = await axios.post(
       'https://google.serper.dev/shopping',
