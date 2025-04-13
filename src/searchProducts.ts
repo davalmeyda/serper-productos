@@ -8,6 +8,8 @@ dotenv.config();
 const API_KEY = process.env.SERPER_API_KEY;
 const DEFAULT_GL = process.env.SERPER_GL || 'pe';
 const DEFAULT_HL = process.env.SERPER_HL || 'es-419';
+const DEFAULT_TBS = process.env.SERPER_TBS;
+const DEFAULT_NUM = process.env.SERPER_NUM ? parseInt(process.env.SERPER_NUM) : undefined;
 
 // Verificar que la API key esté definida
 if (!API_KEY) {
@@ -15,30 +17,32 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-// Interfaz para los parámetros de búsqueda
+// Interfaz para los parámetros de búsqueda (todos opcionales ya que se pueden tomar de variables de entorno)
 interface SearchOptions {
-  gl: string;    // Código de país (ej: 'pe' para Perú) - OBLIGATORIO
-  hl: string;    // Código de idioma (ej: 'es-419' para español latinoamericano) - OBLIGATORIO
-  tbs?: string;  // Filtro de tiempo (ej: 'qdr:m' para el último mes) - OPCIONAL
-  num?: number;  // Número de resultados (máximo 100) - OPCIONAL
+  gl?: string;    // Código de país (ej: 'pe' para Perú)
+  hl?: string;    // Código de idioma (ej: 'es-419' para español latinoamericano)
+  tbs?: string;   // Filtro de tiempo (ej: 'qdr:m' para el último mes)
+  num?: number;   // Número de resultados (máximo 100)
 }
 
-export const searchProducts = async (query: string, options: SearchOptions = { gl: DEFAULT_GL, hl: DEFAULT_HL }): Promise<string> => {
+export const searchProducts = async (query: string, options?: SearchOptions): Promise<string> => {
   try {
     // Construir el cuerpo de la petición con parámetros obligatorios
     const requestBody: any = {
       q: query,
-      gl: options.gl,
-      hl: options.hl
+      gl: options?.gl || DEFAULT_GL,  // Usar valor de options si existe, sino usar variable de entorno
+      hl: options?.hl || DEFAULT_HL   // Usar valor de options si existe, sino usar variable de entorno
     };
     
-    // Añadir parámetros opcionales solo si están definidos
-    if (options.tbs !== undefined) {
-      requestBody.tbs = options.tbs;
+    // Añadir parámetros opcionales solo si están definidos en options o en variables de entorno
+    const tbs = options?.tbs || DEFAULT_TBS;
+    if (tbs) {
+      requestBody.tbs = tbs;
     }
     
-    if (options.num !== undefined) {
-      requestBody.num = options.num;
+    const num = options?.num !== undefined ? options.num : DEFAULT_NUM;
+    if (num !== undefined) {
+      requestBody.num = num;
     }
     
     const response = await axios.post(

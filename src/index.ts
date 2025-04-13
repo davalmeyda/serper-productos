@@ -19,15 +19,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     "search",
     "Buscador de productos en internet",
     { 
-      query: z.string(),
-      gl: z.string().describe('Código de país (ej: pe para Perú)').default('pe'),
-      hl: z.string().describe('Código de idioma (ej: es-419 para español latinoamericano)').default('es-419'),
-      tbs: z.string().optional().describe('Filtro de tiempo (ej: qdr:m para el último mes)'),
-      num: z.number().optional().describe('Número de resultados (máximo 100)')
+      query: z.string()
     },
-    async ({ query, gl, hl, tbs, num }) => {
+    async ({ query }) => {
       try {
-        const result = await searchProducts(query, { gl, hl, tbs, num });
+        // Usar la función searchProducts con los valores de las variables de entorno
+        const result = await searchProducts(query);
         return {
           content: [{ type: "text", text: result }],
         };

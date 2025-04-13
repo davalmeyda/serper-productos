@@ -45,52 +45,54 @@ npm install -g serper-productos
 serper-productos
 ```
 
-### Como dependencia en tu proyecto
+### Como servidor MCP independiente
 
-```javascript
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { searchProducts } from "serper-productos";
+Para usar este paquete como un servidor MCP independiente, puedes configurarlo en tu archivo de configuración MCP. Por ejemplo, para usarlo con Codeium:
 
-// Crear un servidor MCP
-const server = new McpServer({
-  name: "Mi Aplicación",
-  version: "1.0.0",
-});
-
-// Añadir la herramienta de búsqueda de productos
-server.tool(
-  "search",
-  "Buscador de productos en internet",
-  { query: z.string() },
-  async ({ query }) => {
-    try {
-      const result = await searchProducts(query);
-      return {
-        content: [{ type: "text", text: result }],
-      };
-    } catch (error) {
-      return {
-        content: [{ type: "text", text: "Error al buscar productos" }],
-      };
+```json
+{
+  "mcpServers": {
+    "serper-productos": {
+      "command": "npx",
+      "args": ["-y", "serper-productos"],
+      "env": {
+        "SERPER_API_KEY": "tu_clave_api_aqui",
+        "SERPER_GL": "pe",
+        "SERPER_HL": "es-419",
+        "SERPER_TBS": "qdr:m",
+        "SERPER_NUM": 10
+      }
     }
   }
-);
+}
 ```
 
-## API
+Donde:
+- `SERPER_API_KEY`: Tu clave API de Google Serper (obligatorio)
+- `SERPER_GL`: Código de país (predeterminado: "pe")
+- `SERPER_HL`: Código de idioma (predeterminado: "es-419")
+- `SERPER_TBS`: Filtro de tiempo (opcional)
+- `SERPER_NUM`: Número de resultados (opcional)
 
-### `searchProducts(query: string, options: SearchOptions): Promise<string>`
+## Uso con MCP
 
-Busca productos basados en la consulta proporcionada y opciones adicionales.
+Cuando se usa como servidor MCP, este paquete proporciona la siguiente herramienta:
+
+### Herramienta `search`
+
+Busca productos basados en la consulta proporcionada.
 
 #### Parámetros
 
 - `query` (string): El término de búsqueda para encontrar productos.
-- `options` (objeto): Opciones para personalizar la búsqueda:
-  - `gl` (string, **obligatorio**): Código de país (ej: 'pe' para Perú). Predeterminado: valor de SERPER_GL o 'pe'.
-  - `hl` (string, **obligatorio**): Código de idioma (ej: 'es-419' para español latinoamericano). Predeterminado: valor de SERPER_HL o 'es-419'.
-  - `tbs` (string, opcional): Filtro de tiempo (ej: 'qdr:m' para el último mes). Solo se incluye en la petición si se proporciona.
-  - `num` (number, opcional): Número de resultados (máximo 100). Solo se incluye en la petición si se proporciona.
+
+#### Configuración mediante variables de entorno
+
+- `SERPER_API_KEY` (obligatorio): Tu clave API de Google Serper.
+- `SERPER_GL` (opcional): Código de país (ej: 'pe' para Perú). Predeterminado: 'pe'.
+- `SERPER_HL` (opcional): Código de idioma (ej: 'es-419' para español latinoamericano). Predeterminado: 'es-419'.
+- `SERPER_TBS` (opcional): Filtro de tiempo (ej: 'qdr:m' para el último mes).
+- `SERPER_NUM` (opcional): Número de resultados (máximo 100).
 
 #### Retorno
 
