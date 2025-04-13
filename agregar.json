@@ -1,0 +1,6 @@
+{
+  "search-products": {
+    "command": "node",
+    "args": ["/Users/davalmeyda/Proyectos/productos-mcp/dist/index.js"]
+  }
+}

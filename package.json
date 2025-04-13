@@ -1,0 +1,55 @@
+{
+  "name": "serper-productos",
+  "version": "1.0.0",
+  "description": "MCP server para búsqueda de productos usando la API de Google Serper",
+  "license": "MIT",
+  "author": "David Almeyda <davalmeyda@gmail.com>",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./searchProducts": "./dist/searchProducts.js"
+  },
+  "bin": {
+    "serper-productos": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.9.0",
+    "axios": "^1.8.4",
+    "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [
+    "mcp",
+    "productos",
+    "serper",
+    "google",
+    "shopping",
+    "api",
+    "búsqueda",
+    "ecommerce"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davalmeyda/serper-productos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davalmeyda/serper-productos/issues"
+  },
+  "homepage": "https://github.com/davalmeyda/serper-productos#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
